@@ -1,7 +1,7 @@
 /*
 Steven Weatherspoon
 2020 Advent of Code Challenge
-Day 2, Part 1
+Day 2, Part 2
 
 This program takes the first argument as the input filepath
 */
