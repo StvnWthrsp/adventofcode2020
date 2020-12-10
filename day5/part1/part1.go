@@ -1,7 +1,7 @@
 /*
 Steven Weatherspoon
 2020 Advent of Code Challenge
-Day 4, Part 2
+Day 5, Part 1
 
 This program takes the first argument as the input filepath
 */
@@ -32,6 +32,8 @@ func main() {
 
 	for i := 0; i < len(dataArray); i++ {
 		line := dataArray[i]
+		
+		// Use first 7 characters to get seat row
 		rLow := 0.0
 		rHigh := 127.0
 		for k := 0; k < 7; k++ {
@@ -43,6 +45,8 @@ func main() {
 				rLow = rLow + math.Ceil(diff/2)
 			}
 		}
+
+		// Use last 3 characters to get seat column
 		cLow := 0.0
 		cHigh := 7.0
 		for k := 7; k < 10; k++ {
@@ -54,7 +58,11 @@ func main() {
 				cLow = cLow + math.Ceil(diff/2)
 			}
 		}
+
+		// Given expression to calculate seat ID
 		seatId := rLow * 8 + cLow;
+
+		// Keep track of highest seat ID for final answer
 		if seatId > maxSeatId {
 			maxSeatId = seatId
 		}

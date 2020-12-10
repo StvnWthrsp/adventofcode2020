@@ -1,7 +1,7 @@
 /*
 Steven Weatherspoon
 2020 Advent of Code Challenge
-Day 4, Part 2
+Day 5, Part 2
 
 This program takes the first argument as the input filepath
 */
@@ -28,6 +28,7 @@ func main() {
 	// Split full file into array of individual lines (input has one integer per line)
 	dataArray := strings.Split(string(inputData), "\n")
 	
+	// We need the minimum and maximum seat ID because seats are missing at the front and back. These values will tell us where to begin and end our search.
 	minSeatId := 900
 	maxSeatId := 0
 	
@@ -35,6 +36,8 @@ func main() {
 
 	for i := 0; i < len(dataArray); i++ {
 		line := dataArray[i]
+
+		// Use first 7 characters to get seat row
 		rLow := 0.0
 		rHigh := 127.0
 		for k := 0; k < 7; k++ {
@@ -46,6 +49,8 @@ func main() {
 				rLow = rLow + math.Ceil(diff/2)
 			}
 		}
+
+		// Use last 3 characters to get seat column
 		cLow := 0.0
 		cHigh := 7.0
 		for k := 7; k < 10; k++ {
@@ -57,7 +62,11 @@ func main() {
 				cLow = cLow + math.Ceil(diff/2)
 			}
 		}
+
+		// Given expression to calculate seat ID
 		seatId := rLow * 8 + cLow;
+
+		// Add the seat ID to the allSeatIds map and check whether it is lower than minimum / greater than maximum
 		allSeatIds[int(seatId)] = true
 		if int(seatId) > maxSeatId {
 			maxSeatId = int(seatId)
@@ -66,8 +75,11 @@ func main() {
 			minSeatId = int(seatId)
 		}
 	}
+
 	fmt.Printf("Lowest Seat ID: %d\n", minSeatId)
 	fmt.Printf("Highest Seat ID: %d\n", maxSeatId)
+
+	// Search the map for keys between the minimum and maximum to find the one missing key, which is our seat ID
 	for i := minSeatId; i < maxSeatId; i++ {
 		_, ok := allSeatIds[i]
 		if !ok {

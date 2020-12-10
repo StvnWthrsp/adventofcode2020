@@ -112,6 +112,7 @@ func main() {
 		line := dataArray[i]
 
 		if len(line) == 0 {
+			// At each blank line, pass current passport information to the validation function, then clear the map
 			isValid := validatePassport(currentPassport)
 			if isValid {
 				validPassports++
@@ -121,6 +122,7 @@ func main() {
 			}
 			continue
 		}
+		// If the line is not blank, use regex to get each key/value chunk, then split it into a variable for each
 		for _, chunk := range re.FindAllString(line, -1) {
 			splitted := strings.Split(chunk, ":")
 			code, val := splitted[0], splitted[1]
