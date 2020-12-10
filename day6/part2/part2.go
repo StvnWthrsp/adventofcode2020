@@ -38,13 +38,11 @@ func main() {
 		if len(line) == 0 {
 			// If the line is blank, this is the end of the group, calculate the total number of answers (which is equal to the number of keys in the answers map)
 			groupTotal := 0
-			fmt.Printf("Answers remaining: \n")
 			for k := range answers {
 				fmt.Printf("%s", k)
 				groupTotal++
 				delete(answers, k)
 			}
-			fmt.Printf("\n------TOTAL: %d-------\n", groupTotal)
 			total += groupTotal
 			continue
 		}
@@ -66,8 +64,8 @@ func main() {
 			}
 			continue
 		}
-		
-		// If the line is not blank, not the beggining of the file, and not the start of a new group, remove any keys NOT on the line
+
+		// If the line is not blank, not the beginning of the file, and not the start of a new group, remove any keys NOT on the line
 		for k := range answers {
 			if !strings.Contains(line, k) {
 				delete(answers, k)
