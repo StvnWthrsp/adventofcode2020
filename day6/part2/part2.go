@@ -39,7 +39,6 @@ func main() {
 			// If the line is blank, this is the end of the group, calculate the total number of answers (which is equal to the number of keys in the answers map)
 			groupTotal := 0
 			for k := range answers {
-				fmt.Printf("%s", k)
 				groupTotal++
 				delete(answers, k)
 			}
