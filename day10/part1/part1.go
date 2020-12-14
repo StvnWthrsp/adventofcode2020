@@ -16,28 +16,28 @@ import (
 	"strconv"
 )
 
-func printChain(m map[int]bool, currentJolts int, totalOne *int, totalThree *int) (*int, *int) {
+func getChainGaps(m map[int]bool, currentJolts int, totalOne *int, totalThree *int) {
 	nextJolts := currentJolts + 1
 
 	_, ok := m[nextJolts]
 	if ok {
 		*totalOne = *totalOne + 1
-		printChain(m, nextJolts, totalOne, totalThree)
+		getChainGaps(m, nextJolts, totalOne, totalThree)
 	} else {
 		nextJolts++
 		_, ok := m[nextJolts]
 		if ok {
-			printChain(m, nextJolts, totalOne, totalThree)
+			getChainGaps(m, nextJolts, totalOne, totalThree)
 		} else {
 			nextJolts++
 			_, ok := m[nextJolts]
 			if ok {
 				*totalThree = *totalThree + 1
-				printChain(m, nextJolts, totalOne, totalThree)
+				getChainGaps(m, nextJolts, totalOne, totalThree)
 			}
 		}
 	}
-	return totalOne, totalThree
+	return
 }
 
 func main() {
@@ -66,7 +66,7 @@ func main() {
 	t := 1
 	one := &o
 	three := &t
-	printChain(m, 0, one, three)
+	getChainGaps(m, 0, one, three)
 
 	fmt.Printf("Gaps of 1: %d\nGaps of 3: %d\n", o, t)
 	fmt.Printf("Solution: %d*%d = %d\n", o, t, o*t)
