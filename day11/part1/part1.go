@@ -19,6 +19,7 @@ import (
 	"regexp"
 )
 
+// Iterates through every seat in dataString to apply the appropriate rules based on the number of occupied seats returned by countFirstOccupied. Returns the new seat data as a single string, and boolean indicating whether any seat changed.
 func changeSeats(dataString string, lineLength int, lineNum int) ([]string, string, bool) {
 	byteData := make([]byte, len(dataString))
 	copy(byteData, dataString)
@@ -28,8 +29,12 @@ func changeSeats(dataString string, lineLength int, lineNum int) ([]string, stri
 	seatMap := make([]string, lineNum)
 	didChange := false
 
+	// Iterate through every seat
 	for i, c := range byteData {
+		// Calculate x and y grid positions to simplify math within the helper function
 		x, y := i % lineLength, int(math.Floor(float64(i/lineLength)))
+
+		// Count seats and apply rules
 		if c == 'L' && countOccupiedAdjacent(x, y, lineLength, lineNum, byteData) == 0 {
 			newData[i] = '#'
 			didChange = true
@@ -37,6 +42,8 @@ func changeSeats(dataString string, lineLength int, lineNum int) ([]string, stri
 			newData[i] = 'L'
 			didChange = true
 		}
+
+		// If we're at the end of a line, print it
 		if x == lineLength-1 {
 			fmt.Printf("%s\n", string(newData[i-lineLength+1:i+1]))
 			seatMap[y] = string(newData[i-lineLength+1:i+1])
@@ -46,6 +53,7 @@ func changeSeats(dataString string, lineLength int, lineNum int) ([]string, stri
 	return seatMap, string(newData), didChange
 }
 
+// Return true only if the given seat is "#"
 func isOccupied(seat byte) bool {
 	if seat == '#' {
 		return true
@@ -53,6 +61,7 @@ func isOccupied(seat byte) bool {
 	return false
 }
 
+// This is the main helper function of this program. This uses switch statements based on the x,y grid position to determine which seats need to be examined. Returns the count of seats adjacent to the seat at x,y.
 func countOccupiedAdjacent(x int, y int, maxX int, maxY int, byteData []byte) int {
 	index := x + (y*maxX)
 	count := 0
