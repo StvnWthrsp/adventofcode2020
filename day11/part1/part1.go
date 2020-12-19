@@ -3,7 +3,7 @@ Steven Weatherspoon
 2020 Advent of Code Challenge
 Day 11, Part 1
 
-This file currently prints out each iteration of the seap map, which is not necessary, but I enjoy the fun visual representation.
+This file currently prints out each iteration of the seat map, which is not necessary, but I enjoy the fun visual representation.
 
 This program takes the first argument as the input filepath
 */
